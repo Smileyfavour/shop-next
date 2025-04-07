@@ -15,13 +15,10 @@ import { icons } from 'react-icons';
 
 export default function MainNav() {
     const [showMobileNav,setShowMobileNav] = useState(false);
-    // const { data:session } = useSession();
-
+  
     const router = useRouter();
 
-    // const handleFirebaseSignout = () => {
-        
-    // }
+  
 
     return (
         <div>
