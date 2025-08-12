@@ -1,181 +1,132 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { HiMenu} from 'react-icons/hi';
-import { AiOutlineClose,AiOutlineArrowRight,AiFillHome, AiOutlineCloseCircle } from 'react-icons/ai';
+import { HiMenu } from 'react-icons/hi';
+import { AiOutlineCloseCircle, AiFillHome } from 'react-icons/ai';
 import { FiPhoneCall } from 'react-icons/fi';
 import { GiMagnifyingGlass } from 'react-icons/gi';
-import { BsFillHeartFill,BsFillCreditCardFill, BsCart4,} from 'react-icons/bs';
+import { BsFillHeartFill, BsFillCreditCardFill, BsCart4 } from 'react-icons/bs';
 import { ImInfo } from 'react-icons/im';
-import {FaRegHandshake} from "react-icons/fa"
-import {BiSupport, biSupport} from "react-icons/bi"
+import { FaRegHandshake } from "react-icons/fa";
+import { BiSupport } from "react-icons/bi";
 import { useRouter } from 'next/router';
-import { useSession,signOut, signIn } from 'next-auth/react';
-import { icons } from 'react-icons';
 
 export default function MainNav() {
-    const [showMobileNav,setShowMobileNav] = useState(false);
-  
-    const router = useRouter();
+  const [showMobileNav, setShowMobileNav] = useState(false);
+  const router = useRouter();
 
-  
+  return (
+    <div>
+      {/* Main Navigation */}
+      <nav className={mainNavStyles.navBar}>
+        {/* Left Section */}
+        <ul className={mainNavStyles.navSection}>
+          <li>
+            <Link href="/" className={mainNavStyles.brandName}>
+              Shop-Next
+            </Link>
+          </li>
+          <li>
+            <Image width={30} height={38} src="/shop-next logo.png" alt="shop-next" />
+          </li>
+        </ul>
 
-    return (
-        <div>
-            <nav className={mainNavStyles.navBar} id='mainNav' style={{
-                backgroundColor:router.asPath.split('/').includes('/') ? '#ddd6fe' : null,
-            }}>
-            <ul className={mainNavStyles.navSection}>
-                <li className={mainNavStyles.responsiveMenuItems}>
-                    <Link href='/' className={mainNavStyles.brandName}>Shop-Next</Link>
-                </li>
-                <li>
-                    <Image width={30} height={38} src='/shop-next logo.png' alt='shop-next'/>
-                </li>
+        {/* Middle - Search Bar */}
+        <div className={mainNavStyles.searchBlock}>
+          <div className={mainNavStyles.searchPanel}>
+            <input
+              type="text"
+              placeholder="Search products and categories"
+              className={mainNavStyles.search}
+            />
+            <button className={mainNavStyles.searchBtn}>
+              <GiMagnifyingGlass />
+            </button>
+          </div>
+        </div>
 
-                {/* <li className={navbarStyles.responsiveMenuItems}>
-                    <Link href='#' className={navbarStyles.navText}>order</Link>
-                </li> */}
-            </ul>
+        {/* Right Section */}
+        <ul className={mainNavStyles.navSection}>
+          <li className={mainNavStyles.responsiveMenuItems}>
+            <Link href="/login" className={mainNavStyles.navText}>
+              LOGIN
+            </Link>
+          </li>
+          <li className={mainNavStyles.responsiveMenuItems}>
+            <Link href="/signup" className={mainNavStyles.navText}>
+              SIGNUP
+            </Link>
+          </li>
+          <li className={mainNavStyles.responsiveMenuItems}>
+            <Link href="/help" className={mainNavStyles.navText}>
+              help
+            </Link>
+          </li>
+          <li>
+            <HiMenu
+              className={mainNavStyles.menu}
+              onClick={() => setShowMobileNav(true)}
+            />
+          </li>
+        </ul>
+      </nav>
 
-            <ul className={mainNavStyles.navSection}>
-               <div className={mainNavStyles.searchBlock}>
-                     <div className={mainNavStyles.searchPanel}>
-                     {/* Input field */}
-                     <input type="type"
-                     placeholder="search products and categories"
-                     className={mainNavStyles.search}/>
-                     <button className={mainNavStyles.searchBtn}>
-                         <GiMagnifyingGlass/>
-                     </button>
-                     </div>
-                   </div>
-                <li className={mainNavStyles.responsiveMenuItems} 
-                style={{paddingRight:8,}}>
-                    {
-                       <Link href='/signin' className={mainNavStyles.navText}>SIGN IN</Link>
-                     
-                    }
-                </li>
-                <li className={mainNavStyles.responsiveMenuItems} 
-                style={{paddingRight:8}}>
-                    {
-                       <Link href='#' className={mainNavStyles.navText}>SIGN UP</Link>
-                     
-                    }
-                </li>
-                {/* <li className={mainNavStyles.responsiveMenuItems}>
-                <Link href='/addtocart' className={mainNavStyles.navPicture}><Image className={mainNavStyles.navPicture} 
-                 width={30} height={30} src='/shopping-cart.png' alt='add to cart'/></Link>
-                </li> */}
-                <li>
-                <HiMenu
-                className={mainNavStyles.menu}
-                onClick={() => setShowMobileNav(true)}/>
-                </li>
-            </ul>
-            </nav>
-
-            <nav className={mainNavStyles.mobileNav} 
-            style={{display:showMobileNav ? 'block' : 'none'}}>
+      {/* Mobile Navigation Overlay */}
+      {showMobileNav && (
+        <div className={mainNavStyles.mobileNav}>
+          <div className={mainNavStyles.halfScreenMenuBlock}>
             <AiOutlineCloseCircle
-            className={mainNavStyles.mobileMenuClose}
-            onClick={() => setShowMobileNav(false)}
+              className={mainNavStyles.mobileMenuClose}
+              onClick={() => setShowMobileNav(false)}
             />
 
-            <div className={mainNavStyles.halfScreenMenuBlock}>
-                <ul className={mainNavStyles.mobileMenuItems}>
-                    <li className={mainNavStyles.mobileMenuItem}>
-                       <p>
-                        <span>
-                            <Link href='/' onClick={() =>setShowMobileNav (false)} className={mainNavStyles.iconText}>Home</Link>
-                        </span><AiFillHome color='#e35a63'/>
-                       </p>
-                    </li>
-                    <li className={mainNavStyles.mobileMenuItem}>
-                       <p>
-                        <span>
-                            <Link href='#' onClick={() =>setShowMobileNav (false)} className={mainNavStyles.iconText}>Wishlist</Link>
-                        </span><BsFillHeartFill color='#e35a63'/>
-                       </p>
-                    </li>
-                    <li className={mainNavStyles.mobileMenuItem}>
-                       <p>
-                        <span>
-                            <Link href='/addtocart' onClick={() =>setShowMobileNav (false)} className={mainNavStyles.iconText}>Add to cart</Link>
-                        </span><BsCart4 color='#e35a63' />
-                       </p>
-                    </li>
-                 
-                    <li className={mainNavStyles.mobileMenuItem}>
-                       <p>
-                        <span>
-                            <Link href='#' onClick={() =>setShowMobileNav (false)} className={mainNavStyles.iconText}>Buy</Link>
-                        </span><BsFillCreditCardFill color='#e35a63'/>
-                       </p>
-                    </li>
-                 
-                    <li className={mainNavStyles.mobileMenuItem}>
-                       <p>
-                        <span>
-                            <Link href='#' onClick={() =>setShowMobileNav (false)} className={mainNavStyles.iconText}>sell</Link>
-                        </span><FaRegHandshake color='#e35a63'/>
-                       </p>
-                    </li>
-                 
-                    <li className={mainNavStyles.mobileMenuItem}>
-                       <p>
-                        <span>
-                            <Link href='/products/contact-us' onClick={() =>setShowMobileNav (false)} className={mainNavStyles.iconText}>contact us</Link>
-                        </span><FiPhoneCall color='#e35a63'/>
-                       </p>
-                    </li>
-                 
-                    <li className={mainNavStyles.mobileMenuItem}>
-                       <p>
-                        <span>
-                            <Link href='/about-us' onClick={() =>setShowMobileNav (false)} className={mainNavStyles.iconText}>About Us</Link>
-                        </span><ImInfo color='#e35a63'/>
-                       </p>
-                    </li>
-                 
-                    <li className={mainNavStyles.mobileMenuItem}>
-                       <p>
-                        <span>
-                            <Link href='#' onClick={() =>setShowMobileNav (false)} className={mainNavStyles.iconText}>support</Link>
-                        </span><BiSupport color='#e35a63'/>
-                       </p>
-                    </li>
-                 
-                </ul>    
-            </div>
-        </nav>
+            <ul className={mainNavStyles.mobileMenuItems}>
+              <MobileNavItem href="/" label="Home" icon={<AiFillHome color="#e35a63" />} onClick={setShowMobileNav} />
+              <MobileNavItem href="#" label="Wishlist" icon={<BsFillHeartFill color="#e35a63" />} onClick={setShowMobileNav} />
+              <MobileNavItem href="/addtocart" label="Add to cart" icon={<BsCart4 color="#e35a63" />} onClick={setShowMobileNav} />
+              <MobileNavItem href="#" label="Buy" icon={<BsFillCreditCardFill color="#e35a63" />} onClick={setShowMobileNav} />
+              <MobileNavItem href="#" label="Sell" icon={<FaRegHandshake color="#e35a63" />} onClick={setShowMobileNav} />
+              <MobileNavItem href="/products/contact-us" label="Contact Us" icon={<FiPhoneCall color="#e35a63" />} onClick={setShowMobileNav} />
+              <MobileNavItem href="/about-us" label="About Us" icon={<ImInfo color="#e35a63" />} onClick={setShowMobileNav} />
+              <MobileNavItem href="#" label="Support" icon={<BiSupport color="#e35a63" />} onClick={setShowMobileNav} />
+            </ul>
+          </div>
         </div>
-    )
+      )}
+    </div>
+  );
 }
 
-const mainNavStyles= {
-    navBar:'h-[80px] flex flex-row justify-between items-center px-3   border border-gray-200 shadow-md',
-    navSection:'flex flex-row space-x-3  ',
-    navText:'flex px-3 text-white  border border-blue-600 rounded-full shadow-xl bg-indigo-800 shadow-lg shadow-indigo-800/50 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 px-8 py-2 bg-indigo-800',
-    brandName:'font-reading text-2xl text-red-600 font-bold',
-    halfScreenMenuBlock:'h-screen min-w-[300px] max-w-[420px] flex flex-col bg-black absolute right-0 top-0',
-    mobileMenuItem:'flex flex-row',
-    mobileMenuClose:'text-gray-600 w-[38px] h-[38px] absolute top-2 right-2 z-10 ',
-    iconText:' lg:text-red-300 text-red-300 hover:text-red-400',
-    mobileMenuItems:'flex flex-col gap-3 pt-[60px] pr-4 pl-2',
-    responsiveMenuItems:'hidden sm:block ',
-    menu:'block md:hidden w-[38px] h-[38px] text-gray-500',
-    mobileNav:'h-screen w-full bg-black/80 absolute top-0 left-0',
-    mobileMenuText:'text-[20px] font-reading text-gray-400',
-    mobileBottomItems:'flex flex-col gap-2 px-3 pb-3',
-    searchBlock:'md:pr-[80px] pr-[50px]',
-    searchPanel:' flex flex-row gap-2 justify-center',
-    search:'md:w-[450px] w-[150px] border border-red-400 rounded-md py-2 px-3',
-    searchBtn:'w-[50px] flex justify-center items-center bg-indigo-800 text-white  rounded-md cursor-pointer',
-    // // authBtn:'block w-full h-[58px] flex flex-row justify-between items-center px-3 bg-pink-400 rounded-md',
-    // btnItems:'text-xl',
-    // createAcctBtn:'',
-    // icon:'icons:flex flex-col gap-[none]',
-    // navPicture:'flex flex-col justify-center items-cnter',
+function MobileNavItem({ href, label, icon, onClick }) {
+  return (
+    <li className={mainNavStyles.mobileMenuItem}>
+      <Link
+        href={href}
+        className={mainNavStyles.iconText}
+        onClick={() => onClick(false)}
+      >
+        {label}
+      </Link>
+      {icon}
+    </li>
+  );
 }
+
+const mainNavStyles = {
+  navBar: 'h-[80px] flex justify-between items-center px-3 border border-gray-200 shadow-md ',
+  navSection: 'flex items-center space-x-3',
+  navText: 'px-4 py-2 text-white bg-indigo-800 rounded-full border border-blue-600',
+  brandName: 'font-reading text-2xl text-red-600 font-bold',
+  searchBlock: 'hidden md:flex items-center md:pr-20',
+  searchPanel: 'flex gap-2 justify-center',
+  search: 'md:w-[450px] w-[150px] border border-red-400 rounded-md py-2 px-3',
+  searchBtn: 'w-[50px] flex justify-center items-center bg-indigo-800 text-white rounded-md',
+  responsiveMenuItems: 'hidden sm:block',
+  menu: 'block md:hidden w-[38px] h-[38px] text-gray-500 cursor-pointer',
+  mobileNav: 'fixed inset-0 bg-black/80 z-50 flex justify-end',
+  halfScreenMenuBlock: 'h-screen w-[300px] max-w-[420px] bg-black p-4 relative',
+  mobileMenuClose: 'text-gray-300 w-[38px] h-[38px] absolute top-2 right-2 cursor-pointer',
+  mobileMenuItems: 'flex flex-col gap-4 mt-14 text-white',
+  mobileMenuItem: 'flex justify-between items-center border-b border-gray-700 pb-2',
+  iconText: 'text-red-300 hover:text-red-400',
+};

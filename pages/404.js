@@ -12,7 +12,7 @@ export default function PageNotFound() {
     useEffect(() => {
         setScreenHeight(window.innerHeight - 30)
     }, [])
-
+   //the above for setting screenheight.
 
 
     return (
@@ -31,7 +31,7 @@ export default function PageNotFound() {
 
         </>
     )
-}
+}//the above code for 404 page
 
 const styles = {
     container: 'w-full flex flex-col justify-center items-center px-16 bg-white',
