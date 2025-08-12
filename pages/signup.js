@@ -78,6 +78,13 @@ export default function LogIn() {
               >
                 SIGNUP
               </button>
+
+               <p className="mt-6 text-center text-black">
+                            Already signed up?{" "}
+                            <Link href="/login" className="text-indigo-500 hover:underline">
+                              LogIn
+                            </Link>
+                 </p>
             </form>
           </div>
 

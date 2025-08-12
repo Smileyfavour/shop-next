@@ -9,6 +9,7 @@ import { BsFillHeartFill, BsFillCreditCardFill, BsCart4 } from 'react-icons/bs';
 import { ImInfo } from 'react-icons/im';
 import { FaRegHandshake } from "react-icons/fa";
 import { BiSupport } from "react-icons/bi";
+import { IoMdLogIn } from "react-icons/io";
 import { useRouter } from 'next/router';
 
 export default function MainNav() {
@@ -89,6 +90,7 @@ export default function MainNav() {
               <MobileNavItem href="/products/contact-us" label="Contact Us" icon={<FiPhoneCall color="#e35a63" />} onClick={setShowMobileNav} />
               <MobileNavItem href="/about-us" label="About Us" icon={<ImInfo color="#e35a63" />} onClick={setShowMobileNav} />
               <MobileNavItem href="#" label="Support" icon={<BiSupport color="#e35a63" />} onClick={setShowMobileNav} />
+              <MobileNavItem href="/signup" label="sign up" icon={<IoMdLogIn color="#e35a63" />} onClick={setShowMobileNav} />
             </ul>
           </div>
         </div>

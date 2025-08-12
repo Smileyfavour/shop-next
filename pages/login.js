@@ -97,8 +97,7 @@ export default function LogIn() {
 }
 
 const styles = {
-  container:
-    "relative flex min-h-screen items-center justify-center bg-cover bg-center bg-gradient-to-br from-indigo-300 via-white to-red-300 px-4 py-12 sm:py-16",
+  container:"relative flex min-h-screen items-center justify-center bg-cover bg-center bg-gradient-to-br from-indigo-300 via-white to-red-300 px-4 py-12 sm:py-16",
   overlay: "absolute inset-0 bg-black/40 backdrop-blur-sm z-0",
   contentWrapper:"w-full max-w-sm p-6 rounded-lg shadow-xl bg-white/90 shadow-indigo-400/50",
   wrapper:"w-full mt-16 max-w-sm flex flex-col gap-4 p-6 mt-16  rounded-lg shadow-xl bg-white/90 shadow-indigo-400/50",
