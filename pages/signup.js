@@ -4,23 +4,31 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import { ImFacebook, ImTwitter } from "react-icons/im";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app } from "../settings/firebase/firebase.setup"; // your firebase config file
 
-export default function LogIn() {
+export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
+  const auth = getAuth(app); // initialize Firebase auth
 
-
-  const handleSubmit = (e) => {
-     e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
-   }
-   console.log("Email:", email, "Password:", password);
-    router.push("/dashboard");
- };
+    }
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log("User signed up successfully!");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Error signing up:", error.message);
+      alert(error.message);
+    }
+  };
 
   return (
     <>
@@ -32,10 +40,7 @@ export default function LogIn() {
       </Head>
 
       <main className={styles.container}>
-        {/* Blurred background */}
         <div className={styles.overlay}></div>
-
-        {/* Centered Content in Row */}
         <div className="relative z-10 w-full flex flex-col md:flex-row items-start justify-center gap-8 px-4">
           
           {/* SIGNUP Card */}
@@ -63,14 +68,14 @@ export default function LogIn() {
               />
 
               <label className="block mt-4 text-black font-medium">Confirm Password</label>
-             <input
-              type="password"
-              className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
-               placeholder="Confirm your password"
-               value={confirmPassword}
-               onChange={(e) => setConfirmPassword(e.target.value)}
-               required
-             />
+              <input
+                type="password"
+                className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+                placeholder="Confirm your password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
 
               <button
                 type="submit"
@@ -79,12 +84,12 @@ export default function LogIn() {
                 SIGNUP
               </button>
 
-               <p className="mt-6 text-center text-black">
-                            Already signed up?{" "}
-                            <Link href="/login" className="text-indigo-500 hover:underline">
-                              LogIn
-                            </Link>
-                 </p>
+              <p className="mt-6 text-center text-black">
+                Already signed up?{" "}
+                <Link href="/login" className="text-indigo-500 hover:underline">
+                  LogIn
+                </Link>
+              </p>
             </form>
           </div>
 
