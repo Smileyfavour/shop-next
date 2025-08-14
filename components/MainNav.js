@@ -117,7 +117,7 @@ function MobileNavItem({ href, label, icon, onClick }) {
 const mainNavStyles = {
   navBar: 'h-[80px] flex justify-between items-center px-3 border border-gray-200 shadow-md ',
   navSection: 'flex items-center space-x-3',
-  navText: 'px-4 py-2 text-white bg-indigo-800 rounded-full border border-blue-600',
+  navText: 'px-4 py-2 text-white bg-indigo-800  border border-blue-600',
   brandName: 'font-reading text-2xl text-red-600 font-bold',
   searchBlock: 'hidden md:flex items-center md:pr-20',
   searchPanel: 'flex gap-2 justify-center',

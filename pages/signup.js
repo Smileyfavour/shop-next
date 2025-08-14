@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 import { ImFacebook, ImTwitter } from "react-icons/im";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, FacebookAuthProvider } from "firebase/auth"; // Added Facebook provider
 import { app } from "../settings/firebase/firebase.setup"; // your firebase config file
 
 export default function SignUp() {
@@ -13,7 +13,9 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
   const auth = getAuth(app); // initialize Firebase auth
+  const facebookProvider = new FacebookAuthProvider(); // create Facebook auth provider
 
+  // Email/Password Sign Up
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -21,11 +23,23 @@ export default function SignUp() {
       return;
     }
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password); // create account
       console.log("User signed up successfully!");
       router.push("/dashboard");
     } catch (error) {
       console.error("Error signing up:", error.message);
+      alert(error.message);
+    }
+  };
+
+  // Facebook Sign Up/Login
+  const handleFacebookSignIn = async () => {
+    try {
+      await signInWithPopup(auth, facebookProvider); // popup Facebook login
+      console.log("Facebook sign-in successful!");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Facebook sign-in error:", error.message);
       alert(error.message);
     }
   };
@@ -96,12 +110,13 @@ export default function SignUp() {
           {/* Social Buttons */}
           <div className={styles.wrapper}>
             <h2 className="text-red-700 text-2xl font-bold text-center">OR</h2>
+
             <button className={styles.signinBtn}>
               <p>SignUp with Google</p>
               <FcGoogle className="w-6 h-6" />
             </button>
 
-            <button className={styles.signinBtn}>
+            <button className={styles.signinBtn} onClick={handleFacebookSignIn}>
               <p>SignUp with Facebook</p>
               <ImFacebook className="w-6 h-6" />
             </button>
